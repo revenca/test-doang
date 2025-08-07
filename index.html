@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maafkan Aku, Sayang ❤️</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .heart {
+            position: relative;
+            animation: beat 1.5s infinite;
+            transform-origin: center;
+            cursor: pointer;
+        }
+        .heart-shape {
+            width: 100px;
+            height: 90px;
+            background-color: #ff0000;
+            position: relative;
+            transform: rotate(-45deg);
+        }
+        .heart-shape:before,
+        .heart-shape:after {
+            content: "";
+            background-color: #ff0000;
+            border-radius: 50%;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+        .heart-shape:before {
+            top: -50px;
+            left: 0;
+        }
+        .heart-shape:after {
+            top: 0;
+            left: 50px;
+        }
+        .message {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .message h1 {
+            font-size: 3em;
+            color: #fff;
+        }
+        .message p {
+            font-size: 1.5em;
+            color: #ccc;
+        }
+        .options {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        .options button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .options button:hover {
+            transform: translateY(-5px);
+        }
+        #btn-yes {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        #btn-no {
+            background-color: #f44336;
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+        }
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">
+        <div class="heart-shape"></div>
+    </div>
+    <div class="message">
+        <h1>Maafin Aku, Sayang...</h1>
+        <p>I love you ❤️</p>
+    </div>
+    <div class="options">
+        <button id="btn-yes">Ya, aku maafin kamu</button>
+        <button id="btn-no">Enggak</button>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+
+        btnNo.addEventListener('mouseover', () => {
+            // Pindahkan tombol "No" ke posisi acak
+            const newX = Math.random() * (window.innerWidth - btnNo.clientWidth);
+            const newY = Math.random() * (window.innerHeight - btnNo.clientHeight);
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = `${newX}px`;
+            btnNo.style.top = `${newY}px`;
+        });
+    </script>
+</body>
+</html>
