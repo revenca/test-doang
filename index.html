@@ -16,13 +16,16 @@
             overflow: hidden;
             font-family: 'Arial', sans-serif;
             color: #fff;
+            transition: background-color 1s ease-in-out;
         }
+
         .heart {
             position: relative;
             animation: beat 1.5s infinite;
             transform-origin: center;
             cursor: pointer;
         }
+
         .heart-shape {
             width: 100px;
             height: 90px;
@@ -30,6 +33,7 @@
             position: relative;
             transform: rotate(-45deg);
         }
+
         .heart-shape:before,
         .heart-shape:after {
             content: "";
@@ -39,56 +43,98 @@
             width: 100px;
             height: 100px;
         }
+
         .heart-shape:before {
             top: -50px;
             left: 0;
         }
+
         .heart-shape:after {
             top: 0;
             left: 50px;
         }
+
         .message {
             margin-top: 50px;
             text-align: center;
+            transition: opacity 1s ease-in-out;
         }
+
         .message h1 {
             font-size: 3em;
             color: #fff;
         }
+
         .message p {
             font-size: 1.5em;
             color: #ccc;
         }
+
         .options {
             margin-top: 30px;
             display: flex;
             gap: 20px;
+            transition: opacity 0.5s ease-in-out;
         }
+
         .options button {
             padding: 15px 30px;
             font-size: 1.2em;
             border-radius: 30px;
             border: none;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
+
         .options button:hover {
             transform: translateY(-5px);
         }
+
         #btn-yes {
             background-color: #4CAF50;
             color: white;
             box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
         }
+
         #btn-no {
             background-color: #f44336;
             color: white;
             box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
         }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .confetti {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            opacity: 0;
+            animation: fall 2s ease-in-out forwards;
+        }
+
         @keyframes beat {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) rotate(0deg);
+            }
+            25% { opacity: 1; }
+            100% {
+                opacity: 0;
+                transform: translate(var(--endX), var(--endY)) rotate(var(--rot)) scale(0.5);
+            }
         }
     </style>
 </head>
@@ -107,15 +153,50 @@
 
     <script>
         const btnNo = document.getElementById('btn-no');
-
+        const btnYes = document.getElementById('btn-yes');
+        const heart = document.querySelector('.heart');
+        const message = document.querySelector('.message');
+        const options = document.querySelector('.options');
+        
         btnNo.addEventListener('mouseover', () => {
-            // Pindahkan tombol "No" ke posisi acak
             const newX = Math.random() * (window.innerWidth - btnNo.clientWidth);
             const newY = Math.random() * (window.innerHeight - btnNo.clientHeight);
             btnNo.style.position = 'absolute';
             btnNo.style.left = `${newX}px`;
             btnNo.style.top = `${newY}px`;
         });
+        
+        btnYes.addEventListener('click', () => {
+            // Sembunyikan elemen lama
+            heart.style.display = 'none';
+            options.style.display = 'none';
+            
+            // Ubah pesan menjadi ucapan terima kasih
+            document.querySelector('.message h1').textContent = "Terima kasih, Sayang ❤️";
+            document.querySelector('.message p').textContent = "Aku sayang kamuuu...";
+            
+            // Tambahkan animasi confetti
+            createConfetti();
+        });
+
+        function createConfetti() {
+            const confettiContainer = document.createElement('div');
+            confettiContainer.className = 'confetti-container';
+            document.body.appendChild(confettiContainer);
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                confetti.style.setProperty('--x', `${Math.random() * 100 - 50}vw`);
+                confetti.style.setProperty('--y', `${Math.random() * 100 - 50}vh`);
+                confetti.style.setProperty('--endX', `${Math.random() * 200 - 100}vw`);
+                confetti.style.setProperty('--endY', `100vh`);
+                confetti.style.setProperty('--rot', `${Math.random() * 360}deg`);
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                confettiContainer.appendChild(confetti);
+            }
+        }
     </script>
 </body>
 </html>
